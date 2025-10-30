@@ -313,38 +313,42 @@ const closeModal = document.getElementById('closeModal');
 const demoForm = document.getElementById('demoForm');
 
 // Get all buttons that should trigger the modal
-const demoButtons = document.querySelectorAll('a[href="#demo"], a[href="#contact"], .btn-primary, .btn-primary-nav, .btn-secondary, .btn-plan');
+const demoButtons = document.querySelectorAll('[data-modal-target="demo"]');
 
-// Open modal when clicking any demo/CTA button
-demoButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        demoModal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+if (demoModal) {
+    // Open modal when clicking any demo/CTA button
+    demoButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            demoModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
     });
-});
 
-// Close modal when clicking X button
-closeModal.addEventListener('click', () => {
-    demoModal.classList.remove('active');
-    document.body.style.overflow = ''; // Restore scrolling
-});
-
-// Close modal when clicking outside the modal content
-demoModal.addEventListener('click', (e) => {
-    if (e.target === demoModal) {
-        demoModal.classList.remove('active');
-        document.body.style.overflow = '';
+    // Close modal when clicking X button
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            demoModal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        });
     }
-});
 
-// Close modal with Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && demoModal.classList.contains('active')) {
-        demoModal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
+    // Close modal when clicking outside the modal content
+    demoModal.addEventListener('click', (e) => {
+        if (e.target === demoModal) {
+            demoModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && demoModal.classList.contains('active')) {
+            demoModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
 
 // Set minimum date to today
 const dateInput = document.getElementById('preferredDate');
@@ -354,26 +358,30 @@ if (dateInput) {
 }
 
 // Handle form submission
-demoForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(demoForm);
-    const data = Object.fromEntries(formData);
-    
-    console.log('Demo booking submitted:', data);
-    
-    // Show success message
-    alert('Thank you! Your demo has been scheduled. We will contact you shortly to confirm.');
-    
-    // Close modal and reset form
-    demoModal.classList.remove('active');
-    document.body.style.overflow = '';
-    demoForm.reset();
-    
-    // Here you would typically send the data to your backend
-    // Example: fetch('/api/book-demo', { method: 'POST', body: JSON.stringify(data) })
-});
+if (demoForm) {
+    demoForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(demoForm);
+        const data = Object.fromEntries(formData);
+        
+        console.log('Demo booking submitted:', data);
+        
+        // Show success message
+        alert('Thank you! Your demo has been scheduled. We will contact you shortly to confirm.');
+        
+        // Close modal and reset form
+        if (demoModal) {
+            demoModal.classList.remove('active');
+        }
+        document.body.style.overflow = '';
+        demoForm.reset();
+        
+        // Here you would typically send the data to your backend
+        // Example: fetch('/api/book-demo', { method: 'POST', body: JSON.stringify(data) })
+    });
+}
 
 // ===================================
 // CONSOLE MESSAGE
