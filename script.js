@@ -25,6 +25,13 @@ if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', () => {
         navLinks.classList.toggle('active');
         mobileMenuBtn.classList.toggle('active');
+        
+        // iOS fix: Prevent body scroll when menu is open
+        if (navLinks.classList.contains('active')) {
+            document.body.classList.add('menu-open');
+        } else {
+            document.body.classList.remove('menu-open');
+        }
     });
 
     // Close mobile menu when clicking on a link
@@ -33,7 +40,17 @@ if (mobileMenuBtn) {
         item.addEventListener('click', () => {
             navLinks.classList.remove('active');
             mobileMenuBtn.classList.remove('active');
+            document.body.classList.remove('menu-open');
         });
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
     });
 }
 
