@@ -384,6 +384,22 @@ if (demoForm) {
 }
 
 // ===================================
+// HERO PARALLAX EFFECT
+// ===================================
+const heroBg = document.querySelector('.hero-bg-gradient');
+
+function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const rate = scrolled * -0.5; // Adjust this value to control parallax speed
+    
+    if (heroBg) {
+        heroBg.style.transform = `translateX(-50%) translateY(${rate}px)`;
+    }
+}
+
+window.addEventListener('scroll', updateParallax);
+
+// ===================================
 // CONSOLE MESSAGE
 // ===================================
 console.log('%c🐉 DracoSec', 'font-size: 24px; font-weight: bold; color: #6366F1;');
