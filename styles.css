@@ -1132,6 +1132,13 @@ section {
     border-radius: 16px;
     padding: 2.5rem 2rem;
     backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(192, 192, 192, 0.3);
 }
 
 .pricing-card.featured {
